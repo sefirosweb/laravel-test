@@ -1,3 +1,37 @@
+# Init submodules
+```
+git submodule init
+```
+
+# Update (clone) submodules
+```
+git submodule update
+```
+
+# Add submodules
+```
+git submodule add git@github.com:sefirosweb/laravel-mailing.git ./packages/laravel-mailing
+```
+
+## New package
+1º Create folders
+
+2º Add into composer.json:
+```
+...
+"autoload": {
+    "psr-4": {
+        ...
+        "Sefirosweb\\LaravelMailing\\": "packages/laravel-mailing/src"
+        ...
+    }
+},
+```
+3º Add into app.php service providers
+```
+Sefirosweb\LaravelMailing\LaravelMailingServiceProvider::class,
+```
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

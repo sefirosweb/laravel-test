@@ -1,0 +1,3 @@
+[submodule "packages/laravel-mailing"]
+	path = packages/laravel-mailing
+	url = git@github.com:sefirosweb/laravel-mailing.git
