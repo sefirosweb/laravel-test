@@ -4,3 +4,6 @@
 [submodule "packages/laravel-access-list"]
 	path = packages/laravel-access-list
 	url = git@github.com:sefirosweb/laravel-access-list.git
+[submodule "packages/laravel-general-helper"]
+	path = packages/laravel-general-helper
+	url = git@github.com:sefirosweb/laravel-general-helper.git

@@ -29,7 +29,8 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Sefirosweb\\LaravelMailing\\": "packages/laravel-mailing/src",
-            "Sefirosweb\\LaravelAccessList\\": "packages/laravel-access-list/src"
+            "Sefirosweb\\LaravelAccessList\\": "packages/laravel-access-list/src",
+            "Sefirosweb\\LaravelGeneralHelper\\": "packages/laravel-general-helper/src"
         }
     },
     "autoload-dev": {

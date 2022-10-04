@@ -197,6 +197,7 @@ return [
 
         Sefirosweb\LaravelMailing\LaravelMailingServiceProvider::class,
         Sefirosweb\LaravelAccessList\LaravelAccessListServiceProvider::class,
+        Sefirosweb\LaravelGeneralHelper\LaravelGeneralHelperServiceProvider::class,
 
     ],
 
