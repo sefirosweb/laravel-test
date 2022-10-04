@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
@@ -25,7 +28,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
-            "Sefirosweb\\LaravelMailing\\": "packages/laravel-mailing/src"
+            "Sefirosweb\\LaravelMailing\\": "packages/laravel-mailing/src",
+            "Sefirosweb\\LaravelAccessList\\": "packages/laravel-access-list/src"
         }
     },
     "autoload-dev": {
