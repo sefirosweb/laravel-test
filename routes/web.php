@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GeneralHelperTestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +21,8 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return redirect('/');
 })->name('login');
+
+
+Route::get('/general_helper/view', [GeneralHelperTestController::class, 'view']);
+Route::get('/general_helper/generate_data', [GeneralHelperTestController::class, 'generate_data']);
+Route::get('/general_helper/download_csv', [GeneralHelperTestController::class, 'download_csv']);
