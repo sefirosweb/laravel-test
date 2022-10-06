@@ -20,7 +20,9 @@ npm run watch
 
 ## Generate type models:
 
-```
+```php
+# LaravelMailing
+sail artisan types:generate --noKebabCase --outputDir=packages/laravel-mailing/resources/js/types/Models/ && \
 sail artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
 ```
 
