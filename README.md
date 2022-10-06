@@ -18,6 +18,12 @@ npm install
 npm run watch
 ```
 
+## Generate type models:
+
+```
+sail artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
+```
+
 # Init submodules
 
 ```
