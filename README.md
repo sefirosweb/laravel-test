@@ -24,6 +24,12 @@ npm run watch
 # LaravelMailing
 sail artisan types:generate --noKebabCase --outputDir=packages/laravel-mailing/resources/js/types/Models/ && \
 sail artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
+
+# LaravelAccessList
+sail artisan types:generate --noKebabCase --outputDir=packages/laravel-access-list/resources/js/types/Models/ && \
+sail artisan types:generate --noKebabCase --modelDir=packages/laravel-access-list/src/Http/Models --outputDir=packages/laravel-access-list/resources/js/types/Models/
+
+
 ```
 
 # Init submodules
