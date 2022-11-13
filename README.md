@@ -1,12 +1,14 @@
 # Start develop
 
 ```
+git submodule init
+git submodule update
 docker run --rm -it --volume $(pwd):/app composer install
 cp .env.example .env
-sail build
-sail up -d
-sail artisan migrate
-sail artisan optimize
+./vendor/laravel/sail/bin/sail build
+./vendor/laravel/sail/bin/sail up -d
+./vendor/laravel/sail/bin/sail artisan migrate
+./vendor/laravel/sail/bin/sail artisan optimize
 ```
 
 ## Start develop submodules with react
