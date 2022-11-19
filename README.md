@@ -3,18 +3,18 @@
 ```
 git submodule init
 git submodule update
-docker run --rm -it --volume $(pwd):/app composer install
 cp .env.example .env
-./vendor/laravel/sail/bin/sail build
-./vendor/laravel/sail/bin/sail up -d
-./vendor/laravel/sail/bin/sail artisan migrate
-./vendor/laravel/sail/bin/sail artisan optimize
+```
+Start devcontainer from vs code
+```
+composer install
+php artisan migrate
+php artisan optimize
 ```
 
 ## Start develop submodules with react
 
 ```
-sail bash
 cd packages/laravel-access-list/
 npm install
 npm run watch
@@ -24,12 +24,12 @@ npm run watch
 
 ```php
 # LaravelMailing
-sail artisan types:generate --noKebabCase --outputDir=packages/laravel-mailing/resources/js/types/Models/ && \
-sail artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
+php artisan types:generate --noKebabCase --outputDir=packages/laravel-mailing/resources/js/types/Models/ && \
+php artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
 
 # LaravelAccessList
-sail artisan types:generate --noKebabCase --outputDir=packages/laravel-access-list/resources/js/types/Models/ && \
-sail artisan types:generate --noKebabCase --modelDir=packages/laravel-access-list/src/Http/Models --outputDir=packages/laravel-access-list/resources/js/types/Models/
+php artisan types:generate --noKebabCase --outputDir=packages/laravel-access-list/resources/js/types/Models/ && \
+php artisan types:generate --noKebabCase --modelDir=packages/laravel-access-list/src/Http/Models --outputDir=packages/laravel-access-list/resources/js/types/Models/
 
 
 ```
