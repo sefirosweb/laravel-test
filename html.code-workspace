@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "packages/laravel-access-list"
+		},
+		{
+			"path": "packages/laravel-general-helper"
+		},
+		{
+			"path": "packages/laravel-mailing"
+		}
+	],
+	"settings": {}
+}
