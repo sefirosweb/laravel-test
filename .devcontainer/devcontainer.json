@@ -13,8 +13,11 @@
 		"ryannaddy.laravel-artisan",
 		"onecentlin.laravel5-snippets",
 		"onecentlin.laravel-blade",
+		"bmewburn.vscode-intelephense-client",
 		"xdebug.php-debug",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"shardulm94.trailing-spaces",
+		"wmaurer.change-case"
 	],
 	"remoteUser": "sail",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html && bash /var/www/html/.devcontainer/start.sh"
