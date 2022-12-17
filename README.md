@@ -9,6 +9,7 @@ Bundle of packages for laravel, this is a test repository and showoff the packag
 ```
 git submodule init
 git submodule update
+docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/var/www/html -w /var/www/html laravelsail/php81-composer:latest composer install
 cp .env.example .env
 ```
 
