@@ -3,7 +3,7 @@
 ```
 git submodule init
 git submodule update
-docker run --rm -it --volume $(pwd):/app composer install
+docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/var/www/html -w /var/www/html laravelsail/php81-composer:latest composer install
 cp .env.example .env
 ./vendor/laravel/sail/bin/sail build
 ./vendor/laravel/sail/bin/sail up -d
