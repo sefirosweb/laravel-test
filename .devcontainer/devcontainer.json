@@ -17,7 +17,8 @@
 		"xdebug.php-debug",
 		"eamodio.gitlens",
 		"shardulm94.trailing-spaces",
-		"wmaurer.change-case"
+		"wmaurer.change-case",
+		"shufo.vscode-blade-formatter"
 	],
 	"remoteUser": "sail",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html && bash /var/www/html/.devcontainer/start.sh"
