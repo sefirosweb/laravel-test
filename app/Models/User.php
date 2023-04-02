@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -25,25 +26,28 @@ class User extends Authenticatable
         'password',
     ];
 
-    protected $rules = [
-        'name' => [
-            'required',
-            'min:3',
-            'max:255',
-            'unique:users'
-        ],
-        'email' => [
-            'required',
-            'min:3',
-            'max:255',
-            'unique:users'
-        ],
-        'password' => [
-            'required',
-            'min:6',
-            'max:16',
-        ],
-    ];
+    public function getValidationRules(Request $request = null)
+    {
+        return [
+            'name' => [
+                'required',
+                'min:3',
+                'max:255',
+                'unique:App\Models\User,name,' . $request?->id
+            ],
+            'email' => [
+                'required',
+                'min:3',
+                'max:255',
+                'unique:App\Models\User,email,' . $request?->id
+            ],
+            'password' => [
+                'required',
+                'min:6',
+                'max:16',
+            ],
+        ];
+    }
 
     /**
      * The attributes that should be hidden for serialization.
