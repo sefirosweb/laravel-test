@@ -39,6 +39,7 @@ class User extends Authenticatable
                 'required',
                 'min:3',
                 'max:255',
+                'email',
                 'unique:App\Models\User,email,' . $request?->id
             ],
             'password' => [
