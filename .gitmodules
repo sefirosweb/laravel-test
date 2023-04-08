@@ -7,3 +7,6 @@
 [submodule "packages/laravel-general-helper"]
 	path = packages/laravel-general-helper
 	url = git@github.com:sefirosweb/laravel-general-helper.git
+[submodule "packages/laravel-cronjobs"]
+	path = packages/laravel-cronjobs
+	url = git@github.com:sefirosweb/laravel-cronjobs.git
