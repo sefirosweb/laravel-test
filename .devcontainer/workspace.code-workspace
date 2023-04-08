@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../packages/laravel-general-helper"
+		},
+		{
+			"path": "../packages/laravel-cronjobs"
 		}
 	],
 	"settings": {}

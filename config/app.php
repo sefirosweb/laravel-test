@@ -196,6 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Sefirosweb\LaravelMailing\LaravelMailingServiceProvider::class,
+        Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider::class,
         Sefirosweb\LaravelAccessList\LaravelAccessListServiceProvider::class,
         Sefirosweb\LaravelGeneralHelper\LaravelGeneralHelperServiceProvider::class,
 
