@@ -40,6 +40,10 @@ php artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src
 php artisan types:generate --noKebabCase --outputDir=packages/laravel-access-list/resources/js/types/Models/ && \
 php artisan types:generate --noKebabCase --modelDir=packages/laravel-access-list/src/Http/Models --outputDir=packages/laravel-access-list/resources/js/types/Models/
 
+# LaravelCronjobs
+php artisan types:generate --noKebabCase --outputDir=packages/laravel-cronjobs/resources/js/types/Models/ && \
+php artisan types:generate --noKebabCase --modelDir=packages/laravel-cronjobs/src/Http/Models --outputDir=packages/laravel-cronjobs/resources/js/types/Models/
+
 
 ```
 
