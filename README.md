@@ -91,5 +91,5 @@ Sefirosweb\LaravelMailing\LaravelMailingServiceProvider::class,
 4º Execute composer
 
 ```
-sail composer dump-autoload
+php composer dump-autoload
 ```
