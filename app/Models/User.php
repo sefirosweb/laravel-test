@@ -6,14 +6,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Sefirosweb\LaravelAccessList\Http\Models\User as SefiroswebUser;
+use Sefirosweb\LaravelAccessList\Http\Traits\SelfModelValidator;
 
-class User extends Authenticatable
+class User extends SefiroswebUser
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, SelfModelValidator;
 
     /**
      * The attributes that are mass assignable.
