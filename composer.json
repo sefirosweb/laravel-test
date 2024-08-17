@@ -34,6 +34,7 @@
             "Sefirosweb\\LaravelCronjobs\\": "packages/laravel-cronjobs/src",
             "Sefirosweb\\LaravelAccessList\\": "packages/laravel-access-list/src",
             "Sefirosweb\\LaravelGeneralHelper\\": "packages/laravel-general-helper/src",
+            "Sefirosweb\\LaravelOdooConnector\\": "packages/laravel-odoo-connector/src",
             "Brausepulver\\EloquentToGraphQL\\": "packages/laravel-eloquent-to-graphql/src"
         }
     },

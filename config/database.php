@@ -93,6 +93,19 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'odoo' => [
+            'driver' => 'odoo',
+            'host' => env('ODOO_HOST', 'https://your-odoo-host.com'),
+            'database' => env('ODOO_DB', 'db_name'),
+            'username' => env('ODOO_USERNAME', 'user'),
+            'password' => env('ODOO_PASSWORD', 'api_key'),
+            'defaultOptions' => [
+                'timeout' => 20,
+                'context' => [
+                    'lang' => 'es_ES'
+                ],
+            ],
+        ],
     ],
 
     /*
@@ -125,7 +138,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [

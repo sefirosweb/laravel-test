@@ -199,6 +199,7 @@ return [
         Sefirosweb\LaravelCronjobs\LaravelCronjobsServiceProvider::class,
         Sefirosweb\LaravelAccessList\LaravelAccessListServiceProvider::class,
         Sefirosweb\LaravelGeneralHelper\LaravelGeneralHelperServiceProvider::class,
+        Sefirosweb\LaravelOdooConnector\LaravelOdooConnectorServiceProvider::class,
 
     ],
 
