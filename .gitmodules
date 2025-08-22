@@ -1,0 +1,15 @@
+[submodule "packages/laravel-mailing"]
+	path = packages/laravel-mailing
+	url = git@github.com:sefirosweb/laravel-mailing.git
+[submodule "packages/laravel-access-list"]
+	path = packages/laravel-access-list
+	url = git@github.com:sefirosweb/laravel-access-list.git
+[submodule "packages/laravel-general-helper"]
+	path = packages/laravel-general-helper
+	url = git@github.com:sefirosweb/laravel-general-helper.git
+[submodule "packages/laravel-cronjobs"]
+	path = packages/laravel-cronjobs
+	url = git@github.com:sefirosweb/laravel-cronjobs.git
+[submodule "packages/laravel-odoo-connector"]
+	path = packages/laravel-odoo-connector
+	url = git@github.com:sefirosweb/laravel-odoo-connector.git
