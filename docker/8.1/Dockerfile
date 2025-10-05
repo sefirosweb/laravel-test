@@ -65,6 +65,10 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY php.ini /etc/php/8.1/cli/conf.d/99-sail.ini
 RUN chmod +x /usr/local/bin/start-container
 
+# Forzar configuración persistente de Xdebug
+RUN echo "xdebug.mode=develop,debug\nxdebug.start_with_request=yes\nxdebug.client_host=host.docker.internal\nxdebug.client_port=9003" >> /etc/php/8.1/cli/conf.d/20-xdebug.ini
+RUN npm install -g npm-check-updates
+
 EXPOSE 80/tcp
 
 ENTRYPOINT ["start-container"]

@@ -1,23 +1,45 @@
 {
 	"folders": [
 		{
-			"path": ".."
+			"path": "..",
+			"name": "html"
 		},
 		{
-			"path": "../packages/laravel-access-list"
+			"path": "../packages/laravel-access-list",
+			"name": "laravel-access-list"
 		},
 		{
-			"path": "../packages/laravel-mailing"
+			"path": "../packages/laravel-mailing",
+			"name": "laravel-mailing"
 		},
 		{
-			"path": "../packages/laravel-general-helper"
+			"path": "../packages/laravel-general-helper",
+			"name": "laravel-general-helper"
 		},
 		{
-			"path": "../packages/laravel-cronjobs"
+			"path": "../packages/laravel-cronjobs",
+			"name": "laravel-cronjobs"
 		},
 		{
-			"path": "../packages/laravel-odoo-connector"
+			"path": "../packages/laravel-odoo-connector",
+			"name": "laravel-odoo-connector"
 		}
 	],
+	"launch": {
+		"version": "0.2.0",
+		"configurations": [
+			{
+				"name": "Listen for Xdebug (Sail)",
+				"type": "php",
+				"request": "launch",
+				"hostname": "0.0.0.0",
+				"port": 9003,
+				"pathMappings": {
+					"/var/www/html": "${workspaceFolder:html}",
+				}
+			}
+		],
+		"compounds": []
+	},
 	"settings": {}
 }
