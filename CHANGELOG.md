@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [12.0.2] - 2026-04-23
+
+### Changed
+- Bumps all five submodules to `v12.0.2`. See each submodule's `CHANGELOG.md` for specifics:
+  - `laravel-general-helper` v12.0.2 **fixes a breaking-change regression from v12.0.1** where `ExcelHelper::$spreadsheet` was inadvertently tightened from dynamic-public to declared-protected. A new `getSpreadsheet()` getter restores external access. Callers must migrate from `$excel->spreadsheet->…` to `$excel->getSpreadsheet()->…`.
+  - `laravel-odoo-connector` v12.0.2 renames the typoed `Database\Relelations\*` namespace to `Database\Relations\*`. Technically breaking for anyone importing those classes directly; these are internal driver plumbing and normal consumer code does not.
+  - `laravel-access-list`, `laravel-cronjobs`, `laravel-general-helper`, `laravel-mailing` all enable `declare(strict_types=1);` across `src/`.
+  - `laravel-cronjobs` and `laravel-mailing` clean up legacy `@return void` docblocks on migrations (replaced with native `: void` return types).
+
 ## [12.0.1] - 2026-04-23
 
 ### Changed
