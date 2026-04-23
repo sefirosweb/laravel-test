@@ -1,66 +1,101 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+> ⚠️ **Rama legacy `11.0`** — banco de pruebas congelado para Laravel 11. No se desarrolla aquí.
+> **Rama activa**: [`12.0`](../../tree/12.0).
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+# laravel-test
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Banco de pruebas interno para los 5 paquetes Laravel de `sefirosweb`. **No es una aplicación de producción** — solo sirve como host real para validar que los paquetes arrancan correctamente bajo cada major de Laravel.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Estructura
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Host**: Laravel 12 + [Laravel Sail](https://laravel.com/docs/sail) (Docker).
+- **Paquetes bajo prueba** (`packages/`, cada uno es un submódulo git independiente):
 
-## Learning Laravel
+  | Paquete | Repo |
+  |---|---|
+  | laravel-access-list | [github.com/sefirosweb/laravel-access-list](https://github.com/sefirosweb/laravel-access-list) |
+  | laravel-cronjobs | [github.com/sefirosweb/laravel-cronjobs](https://github.com/sefirosweb/laravel-cronjobs) |
+  | laravel-general-helper | [github.com/sefirosweb/laravel-general-helper](https://github.com/sefirosweb/laravel-general-helper) |
+  | laravel-mailing | [github.com/sefirosweb/laravel-mailing](https://github.com/sefirosweb/laravel-mailing) |
+  | laravel-odoo-connector | [github.com/sefirosweb/laravel-odoo-connector](https://github.com/sefirosweb/laravel-odoo-connector) |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Modelo de ramas (major-aligned)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Cada repo (tanto este host como los submódulos) sigue el mismo patrón que usa el propio `laravel/framework`:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Ramas nombradas por major de Laravel** (`12.x`, `11.x`, `9.x`, …).
+- **Default** = major actualmente soportado.
+- **Sin `master`** — cada versión vive en su rama con nombre.
+- Tags: `v<major>.<minor>.<patch>` (SemVer).
 
-## Laravel Sponsors
+### Estado actual
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Repo | Default | Ramas | Tag actual |
+|---|---|---|---|
+| laravel-test (host) | `12.0` | `9.0`, `11.0`, `12.0` | — |
+| 5 submódulos | `12.x` | `9.x`, `12.x` | `v12.0.0` |
 
-### Premium Partners
+- Para trabajar en L12: `git checkout 12.x` (o `12.0` en el host).
+- Para hotfix en L9 legacy: `git checkout 9.x` + nuevo tag `v9.x.y`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Arrancar el entorno
 
-## Contributing
+```bash
+./vendor/bin/sail up -d
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- App en `http://localhost:80`
+- MySQL en `localhost:3306` (sail / password)
 
-## Code of Conduct
+Si venías de un `vendor/` antiguo (antes de Laravel 12), regenera:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+./vendor/bin/sail composer install
+./vendor/bin/sail restart laravel.test
+```
 
-## Security Vulnerabilities
+## Trabajar sobre un paquete
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Cada submódulo tiene su propio `composer.json`, `vendor/` y suite Testbench independiente.
 
-## License
+```bash
+# Instalar/actualizar dependencias del paquete
+docker exec -w /var/www/html/packages/<paquete> laravel-test-laravel.test-1 composer update
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Correr los tests del paquete
+docker exec -w /var/www/html/packages/<paquete> laravel-test-laravel.test-1 ./vendor/bin/phpunit
+```
+
+Primera vez que entras a un submódulo desde el contenedor, si git se queja de `dubious ownership`:
+
+```bash
+docker exec laravel-test-laravel.test-1 \
+  git config --global --add safe.directory /var/www/html/packages/<paquete>
+```
+
+## Flujo de release (cuando subas un paquete a una nueva major de Laravel)
+
+Ejemplo: portar `laravel-cronjobs` a Laravel 13.
+
+```bash
+cd packages/laravel-cronjobs
+git checkout 12.x
+git checkout -b 13.x          # se crea desde 12.x
+# ... aplicar cambios, bumpear composer.json a ^13.0, correr tests ...
+git commit -m "Add Laravel 13 support"
+git tag v13.0.0
+git push -u origin 13.x
+git push origin v13.0.0
+```
+
+Luego en GitHub UI: **Settings → Branches → Default branch → Switch to `13.x`**.
+
+La rama `12.x` queda congelada (solo fix-only). Tag `v12.0.0` sigue instalable en proyectos L12 existentes.
+
+## Documentación técnica detallada
+
+Ver [CLAUDE.md en la rama 12.0](../../blob/12.0/CLAUDE.md) para:
+- Breaking changes de Laravel 11→12 aplicados y dónde
+- Setup estándar de Testbench para nuevos paquetes
+- Pendientes conocidos (phpspreadsheet EOL, `utf8_decode`, dynamic properties)
