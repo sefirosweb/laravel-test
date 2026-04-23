@@ -1,95 +1,101 @@
-# Larave test
+> ⚠️ **Rama legacy `9.0`** — banco de pruebas congelado para Laravel 9. No se desarrolla aquí.
+> **Rama activa**: [`12.0`](../../tree/12.0).
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/sefirosweb)
+---
 
-Bundle of packages for laravel, this is a test repository and showoff the packages works
+# laravel-test
 
-# Start develop
+Banco de pruebas interno para los 5 paquetes Laravel de `sefirosweb`. **No es una aplicación de producción** — solo sirve como host real para validar que los paquetes arrancan correctamente bajo cada major de Laravel.
 
-```
-git submodule init
-git submodule update
-docker run --rm -u "$(id -u):$(id -g)" -v $(pwd):/var/www/html -w /var/www/html laravelsail/php81-composer:latest composer install
-cp .env.example .env
-```
+## Estructura
 
-Start devcontainer from vs code
+- **Host**: Laravel 12 + [Laravel Sail](https://laravel.com/docs/sail) (Docker).
+- **Paquetes bajo prueba** (`packages/`, cada uno es un submódulo git independiente):
 
-```
-composer install
-php artisan migrate
-php artisan optimize
-```
+  | Paquete | Repo |
+  |---|---|
+  | laravel-access-list | [github.com/sefirosweb/laravel-access-list](https://github.com/sefirosweb/laravel-access-list) |
+  | laravel-cronjobs | [github.com/sefirosweb/laravel-cronjobs](https://github.com/sefirosweb/laravel-cronjobs) |
+  | laravel-general-helper | [github.com/sefirosweb/laravel-general-helper](https://github.com/sefirosweb/laravel-general-helper) |
+  | laravel-mailing | [github.com/sefirosweb/laravel-mailing](https://github.com/sefirosweb/laravel-mailing) |
+  | laravel-odoo-connector | [github.com/sefirosweb/laravel-odoo-connector](https://github.com/sefirosweb/laravel-odoo-connector) |
 
-## Start develop submodules with react
+## Modelo de ramas (major-aligned)
 
-```
-cd packages/laravel-access-list/
-npm install
-npm run watch
-```
+Cada repo (tanto este host como los submódulos) sigue el mismo patrón que usa el propio `laravel/framework`:
 
-## Generate type models:
+- **Ramas nombradas por major de Laravel** (`12.x`, `11.x`, `9.x`, …).
+- **Default** = major actualmente soportado.
+- **Sin `master`** — cada versión vive en su rama con nombre.
+- Tags: `v<major>.<minor>.<patch>` (SemVer).
 
-```php
-# LaravelMailing
-php artisan types:generate --noKebabCase --outputDir=packages/laravel-mailing/resources/js/types/Models/ && \
-php artisan types:generate --noKebabCase --modelDir=packages/laravel-mailing/src/Http/Models --outputDir=packages/laravel-mailing/resources/js/types/Models/
+### Estado actual
 
-# LaravelAccessList
-php artisan types:generate --noKebabCase --outputDir=packages/laravel-access-list/resources/js/types/Models/ && \
-php artisan types:generate --noKebabCase --modelDir=packages/laravel-access-list/src/Http/Models --outputDir=packages/laravel-access-list/resources/js/types/Models/
+| Repo | Default | Ramas | Tag actual |
+|---|---|---|---|
+| laravel-test (host) | `12.0` | `9.0`, `11.0`, `12.0` | — |
+| 5 submódulos | `12.x` | `9.x`, `12.x` | `v12.0.0` |
 
-# LaravelCronjobs
-php artisan types:generate --noKebabCase --outputDir=packages/laravel-cronjobs/resources/js/types/Models/ && \
-php artisan types:generate --noKebabCase --modelDir=packages/laravel-cronjobs/src/Http/Models --outputDir=packages/laravel-cronjobs/resources/js/types/Models/
+- Para trabajar en L12: `git checkout 12.x` (o `12.0` en el host).
+- Para hotfix en L9 legacy: `git checkout 9.x` + nuevo tag `v9.x.y`.
 
+## Arrancar el entorno
 
+```bash
+./vendor/bin/sail up -d
 ```
 
-# Init submodules
+- App en `http://localhost:80`
+- MySQL en `localhost:3306` (sail / password)
 
-```
-git submodule init
-```
+Si venías de un `vendor/` antiguo (antes de Laravel 12), regenera:
 
-# Update (clone) submodules
-
-```
-git submodule update
+```bash
+./vendor/bin/sail composer install
+./vendor/bin/sail restart laravel.test
 ```
 
-# Add submodules
+## Trabajar sobre un paquete
 
-```
-git submodule add git@github.com:sefirosweb/laravel-mailing.git ./packages/laravel-mailing
-```
+Cada submódulo tiene su propio `composer.json`, `vendor/` y suite Testbench independiente.
 
-## New package
+```bash
+# Instalar/actualizar dependencias del paquete
+docker exec -w /var/www/html/packages/<paquete> laravel-test-laravel.test-1 composer update
 
-1º Create folders
-
-2º Add into composer.json:
-
-```
-...
-"autoload": {
-    "psr-4": {
-        ...
-        "Sefirosweb\\LaravelMailing\\": "packages/laravel-mailing/src"
-        ...
-    }
-},
+# Correr los tests del paquete
+docker exec -w /var/www/html/packages/<paquete> laravel-test-laravel.test-1 ./vendor/bin/phpunit
 ```
 
-3º Add into app.php service providers
+Primera vez que entras a un submódulo desde el contenedor, si git se queja de `dubious ownership`:
 
-```
-Sefirosweb\LaravelMailing\LaravelMailingServiceProvider::class,
+```bash
+docker exec laravel-test-laravel.test-1 \
+  git config --global --add safe.directory /var/www/html/packages/<paquete>
 ```
 
-4º Execute composer
+## Flujo de release (cuando subas un paquete a una nueva major de Laravel)
 
+Ejemplo: portar `laravel-cronjobs` a Laravel 13.
+
+```bash
+cd packages/laravel-cronjobs
+git checkout 12.x
+git checkout -b 13.x          # se crea desde 12.x
+# ... aplicar cambios, bumpear composer.json a ^13.0, correr tests ...
+git commit -m "Add Laravel 13 support"
+git tag v13.0.0
+git push -u origin 13.x
+git push origin v13.0.0
 ```
-php composer dump-autoload
-```
+
+Luego en GitHub UI: **Settings → Branches → Default branch → Switch to `13.x`**.
+
+La rama `12.x` queda congelada (solo fix-only). Tag `v12.0.0` sigue instalable en proyectos L12 existentes.
+
+## Documentación técnica detallada
+
+Ver [CLAUDE.md en la rama 12.0](../../blob/12.0/CLAUDE.md) para:
+- Breaking changes de Laravel 11→12 aplicados y dónde
+- Setup estándar de Testbench para nuevos paquetes
+- Pendientes conocidos (phpspreadsheet EOL, `utf8_decode`, dynamic properties)
