@@ -17,9 +17,12 @@ Proyecto Laravel 12 usado como banco de pruebas para los paquetes internos de la
 
 **Major aligned con Laravel** (como Spatie, Barryvdh, Orchestra) — decisión tomada 2026-04-23, sin retrocompatibilidad:
 
-- Rama `12.x` + tag `v12.0.0` por paquete, alineada con la major de Laravel que soporta.
+- Ramas nombradas por major de Laravel (`12.x`, `11.x`, `9.x`, …). **No hay rama `master`** — se borró en 2026-04-23 al migrar al esquema versionado.
+- Default branch de cada repo = major actualmente soportado (hoy `12.x` en los 5 submódulos, `12.0` en el host).
+- Código L9 legacy vive en la rama `9.x` de cada submódulo (heredada del viejo `master`). Los tags `1.x` anteriores corresponden a esa línea.
+- Tag por paquete: `v<major>.<minor>.<patch>` (SemVer). Primer tag L12 = `v12.0.0`.
 - `composer.json` → `"laravel/framework": "^12.0"` y `"php": "^8.2"` (constraint estricta, no rango multi-versión).
-- Al subir a L13: rama `13.x`, tag `v13.0.0`. La rama `12.x` queda congelada (fix-only urgente).
+- Al subir a L13: rama `13.x` creada desde `12.x`, tag `v13.0.0`, default branch cambia a `13.x` vía GitHub UI. La rama `12.x` queda congelada (fix-only urgente).
 - Bugfixes retro van a la rama de la versión correspondiente.
 - Las versiones antiguas del paquete NO van a instalarse en Laravel nuevas — romper backward compat está aceptado.
 
