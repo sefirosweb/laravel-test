@@ -92,22 +92,34 @@ Patrón estándar **Orchestra Testbench**. Archivos por paquete:
 - Si el paquete `access-list` tiene middleware `checkAcl:acl_edit` en su config, hay que sobrescribirlo a `'web'` en `defineEnvironment()` del TestCase para que las rutas registren sin auth setup.
 - Las migraciones con FK a `users` requieren crear la tabla `users` en `defineDatabaseMigrations()` del TestCase.
 
-## Pendientes (orden de prioridad)
+## Estado a día de hoy (v12.0.2)
 
-### Probablemente rompen en producción bajo ciertas condiciones
+Los 5 paquetes publicados con tag `v12.0.2` incluyen, acumulativamente:
 
-1. **`laravel-general-helper/ExcelHelper`**: usa `setCellValueByColumnAndRow()` (REMOVIDO en phpspreadsheet 2.0). Si se bumpea phpspreadsheet → hay que refactor a `setCellValue([$col, $row], $value)` o `Coordinate::stringFromColumnIndex($col) . $row`. Actualmente sigue con `^1.28` que funciona en PHP 8.4 pero está EOL.
-2. **`utf8_decode()` en `laravel-general-helper/Helpers/GeneralHelperFunctions.php:391`**: función DEPRECATED en PHP 8.2+, se elimina en PHP 9. Reemplazar por `mb_convert_encoding($s, 'ISO-8859-1', 'UTF-8')`.
-3. **Dynamic properties restantes (PHP 8.2+)**: emiten `E_DEPRECATED`, aún no error. Declarar tipos en:
-   - `ExcelHelper`: `$fileName`, `$path`, `$spreadsheet`, `$writer`
-   - `CacheRequest`, `RedisHelper` — revisar
+- **Laravel 12 + PHP 8.2+** strict-typed en todo `src/` (y en `tests/`).
+- **Testbench + Orchestra** → 134+ tests totales (access-list 17, cronjobs 22, general-helper 56, mailing 18, odoo-connector 23 con 21 Integration contra Odoo real).
+- **GitHub Actions CI** corriendo en matrix PHP 8.2 / 8.3 / 8.4 por cada push/PR a `12.x`.
+- **dompdf v3** + **phpspreadsheet v3** (bumps + migración de APIs removidas).
+- **Fix `utf8_decode` → `mb_convert_encoding`** (PHP 9-safe).
+- **Race condition fixes** en nombres de archivo (`uniqid()` en vez de `date('YmdHis')`).
+- **Helpers tipados** y clases internas de odoo-connector con namespace corregido (`Database\Relations\`).
+- **CHANGELOG + LICENSE** en cada paquete.
+- **v12.0.2 fix**: `ExcelHelper::getSpreadsheet()` / `getWriter()` públicos tras el breaking change accidental de v12.0.1.
 
-### Estéticos / no bloquean
+## Pendientes reales para v12.0.3 o posterior
 
-- Docblocks `@return void` en migraciones (26 ocurrencias). Reemplazar por return type nativo `: void` o eliminar. Ya se hizo en las migraciones que toqué.
-- `composer.lock` aparece `M` en git status de los submódulos porque antes estaba versionado. El `.gitignore` nuevo lo ignora pero git lo sigue rastreando. Si quieres dejar de versionarlo: `git rm --cached composer.lock` dentro del submódulo.
+### Menor (bug real pero con impacto casi nulo)
 
-### No hay que hacer nada pero conviene saberlo
+- **`laravel-odoo-connector/Commands/TestOdooConnection.php:53`**: `dd($a->toArray())` en el comando `test:odoo` mata el proceso antes de devolver `Command::SUCCESS`. Reemplazar por `$this->info(json_encode(...))`. ~2 min de trabajo.
 
-- **Rutas legacy de L5/L6 estilo `'AccessListController@get'` con namespace group**: ya convertidas. Quedan cero.
-- **phpspreadsheet v1.30**: instalable con PHP 8.4. Funciona, pero la lib está EOL y habrá que bumpearla en algún ciclo.
+### Cosméticos (no bloquean nada)
+
+- Return types nativos en métodos sin ellos: `PdfHelper` (5 métodos), `MailingList::get()`, `SelfModelValidator` (2 métodos).
+- Error checks en `fopen()` dentro de `GeneralHelperFunctions.php:338, 394`. Riesgo real muy bajo porque `File::makeDirectory()` ya valida permisos aguas arriba.
+- Tests para los comandos utility `purge:temp` y `test:odoo`. Ambos son triviales; difícil justificar cobertura.
+
+### No aplicables / falsos positivos
+
+- **`test()`, `test_timeout()`, `test_error()` en `CronjobsController`**: no es dead code. Son métodos invocables desde la UI del paquete para validar scheduler / queue / timeout. `test_timeout()` es un `while(true)` deliberado para probar que el worker kill del timeout (120s) funciona en producción.
+- **`CacheRequest` static state**: intencional. En queue workers largos sí hay leak entre jobs, pero está documentado como "per-request".
+- **`DB::raw()` con `IF(ISNULL(...))` en `ListCronjobs::handle`**: MySQL-only intencional. Solo corre en artisan contra la BD de prod.

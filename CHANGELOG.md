@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [12.0.3] - 2026-04-23
+
+### Changed
+- Bumps all five submodules to `v12.0.3`. See each submodule's `CHANGELOG.md` for specifics. Highlights:
+  - `laravel-general-helper` v12.0.3: fixes two PHP 8 runtime bugs in the `purge:temp` command (SplFileInfo → string coercions on `pathinfo()` and `unlink()`), plus native return types on `PdfHelper` and hardened `fopen()` error handling.
+  - `laravel-odoo-connector` v12.0.3: removes a stray `dd()` in the `test:odoo` command that killed the process before returning an exit code, and handles the "no data" path gracefully.
+  - All 5 packages: minor native return-type additions on helpers / traits.
+
+### Tests
+- 143 tests, 314 assertions, all green (access-list 17, cronjobs 22, general-helper 60, mailing 18, odoo-connector 26).
+
 ## [12.0.2] - 2026-04-23
 
 ### Changed
