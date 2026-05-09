@@ -8,7 +8,12 @@
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.0",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "sefirosweb/laravel-access-list": "13.x-dev",
+        "sefirosweb/laravel-cronjobs": "13.x-dev",
+        "sefirosweb/laravel-general-helper": "13.x-dev",
+        "sefirosweb/laravel-mailing": "13.x-dev",
+        "sefirosweb/laravel-odoo-connector": "13.x-dev"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -19,12 +24,18 @@
         "nunomaduro/collision": "^8.6",
         "phpunit/phpunit": "^12.0"
     },
+    "repositories": [
+        { "type": "path", "url": "packages/laravel-access-list",     "options": { "symlink": true } },
+        { "type": "path", "url": "packages/laravel-cronjobs",        "options": { "symlink": true } },
+        { "type": "path", "url": "packages/laravel-general-helper",  "options": { "symlink": true } },
+        { "type": "path", "url": "packages/laravel-mailing",         "options": { "symlink": true } },
+        { "type": "path", "url": "packages/laravel-odoo-connector",  "options": { "symlink": true } }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/",
-            "Sefirosweb\\LaravelOdooConnector\\": "packages/laravel-odoo-connector/src"
+            "Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
